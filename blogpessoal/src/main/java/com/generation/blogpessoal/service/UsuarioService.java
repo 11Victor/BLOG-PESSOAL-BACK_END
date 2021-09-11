@@ -18,13 +18,19 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	public List<Usuario> listarUsuarios(){
+
+	public List<Usuario> listarUsuarios() {
 
 		return usuarioRepository.findAll();
 
 	}
-	
+
+	// Buscar usuário pelo Id
+	public Optional<Usuario> buscarUsuarioId(long id) {
+
+		return usuarioRepository.findById(id);
+	}
+
 	// Cadastrar novo usuario
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
@@ -80,7 +86,4 @@ public class UsuarioService {
 		return null;
 	}
 
-	
-	
-	
 }
