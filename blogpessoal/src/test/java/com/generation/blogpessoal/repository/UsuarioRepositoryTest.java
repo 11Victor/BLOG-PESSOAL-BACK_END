@@ -3,6 +3,9 @@ package com.generation.blogpessoal.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -24,20 +27,22 @@ public class UsuarioRepositoryTest {
 	private UsuarioRepository usuarioRepository;
 
 	@BeforeAll
-	void start() {
-		Usuario usuario = new Usuario(0, "Victor Valencio", "victor@gmail.com", "12345678");
+	void start() throws ParseException{
+		LocalDate data = LocalDate.parse("2000-07-22", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
+		Usuario usuario = new Usuario(0, "Victor Valencio", "victor@gmail.com", "12345678", data);
 		if (!usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
 			usuarioRepository.save(usuario);
 
-		usuario = new Usuario(0, "Stephany Valencio", "stephany@gmail.com", "12345678");
+		usuario = new Usuario(0, "Stephany Valencio", "stephany@gmail.com", "12345678", data);
 		if (!usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
 			usuarioRepository.save(usuario);
 
-		usuario = new Usuario(0, "Lucas Santos", "lucas@gmail.com", "12345678");
+		usuario = new Usuario(0, "Lucas Santos", "lucas@gmail.com", "12345678", data);
 		if (!usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
 			usuarioRepository.save(usuario);
 
-		usuario = new Usuario(0, "Amora Valencio", "amora@gmail.com", "12345678");
+		usuario = new Usuario(0, "Amora Valencio", "amora@gmail.com", "12345678", data);
 
 		if (!usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
 			usuarioRepository.save(usuario);

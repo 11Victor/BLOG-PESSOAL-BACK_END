@@ -2,6 +2,10 @@ package com.generation.blogpessoal.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -9,6 +13,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -37,9 +42,10 @@ public class UsuarioControllerTest {
 	private UsuarioRepository usuarioRepository;
 	
 	@BeforeAll
-	public void start(){
+	public void start() throws ParseException {
 
-        usuarioAdmin = new Usuario(0L, "Administrador", "admin@email.com.br", "admin123");
+		LocalDate dataAdmin = LocalDate.parse("1990-07-22", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        usuarioAdmin = new Usuario(0L, "Administrador", "admin@email.com.br", "admin123", dataAdmin);
 
 		if(!usuarioRepository.findByUsuario(usuarioAdmin.getUsuario()).isPresent()) {
 
@@ -48,11 +54,11 @@ public class UsuarioControllerTest {
 			
 		}
 		
-		
-        usuario = new Usuario(0L, "Paulo Antunes", "paulo@email.com.br", "13465278");
+		LocalDate dataPost = LocalDate.parse("2000-07-22", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        usuario = new Usuario(0L, "Paulo Antunes", "paulo@email.com.br", "13465278", dataPost);
         
-		
-        usuarioUpdate = new Usuario(2L, "Paulo Antunes de Souza", "paulo_souza@email.com.br", "souza123");
+		LocalDate dataPut = LocalDate.parse("2000-07-22", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        usuarioUpdate = new Usuario(2L, "Paulo Antunes de Souza", "paulo_souza@email.com.br", "souza123", dataPut);
 	}
 
 	@Test
@@ -78,12 +84,14 @@ public class UsuarioControllerTest {
 	
 	@Test
     @Order(3)
-	@DisplayName("😳 Alterar Usuário!")
+	@DisplayName("👀 Atualizar Usuário!")
 	public void deveRealizarPutUsuario() {
 
 		HttpEntity<Usuario> request = new HttpEntity<Usuario>(usuarioUpdate);
 
-		ResponseEntity<Usuario> resposta = testRestTemplate.withBasicAuth("admin@email.com.br", "admin123").exchange("/usuarios/alterar", HttpMethod.PUT, request, Usuario.class);
+		ResponseEntity<Usuario> resposta = testRestTemplate
+		.withBasicAuth("admin@email.com.br", "admin123")
+		.exchange("/usuarios/atualizar", HttpMethod.PUT, request, Usuario.class);
 		
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 		
