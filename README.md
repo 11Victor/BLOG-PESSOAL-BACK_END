@@ -1,2 +1,3 @@
 # BLOG-PESSOAL
-Blog Pessoal em desenvolvimento.
+
+Back-end do blog pessoal, utilizando o Swagger: https://victorblogpessoal.herokuapp.com/
